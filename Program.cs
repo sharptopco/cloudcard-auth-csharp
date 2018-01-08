@@ -13,23 +13,18 @@ namespace WebAPIClient
         private const string PROTOCOL = "https://";
         static void Main(string[] args)
         {
-            Dictionary<string,string> settings = ParseArgs(args);
+            Settings settings = new Settings(args);
 
-            string baseURL = GetSetting("baseURL", settings);
-            string authToken = GetSetting("authToken", settings);
-            string email = GetSetting("email", settings);
-            string idNumber = GetSetting("idNumber", settings);
-
-            if (baseURL == null || authToken == null || email == null || idNumber == null)
+            if (settings.isValid)
             {
                 Console.WriteLine("Exiting because of missing arguments");
                 return;
             }
 
-            Client.BaseAddress = new Uri($"{PROTOCOL}{baseURL}/");
+            Client.BaseAddress = new Uri($"{PROTOCOL}{settings.baseURL}/");
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Add("Accept", "application/json");
-            Client.DefaultRequestHeaders.Add("X-Auth-Token", authToken);
+            Client.DefaultRequestHeaders.Add("X-Auth-Token", settings.authToken);
             
             if (!IsCloudCardUp().Result) 
             {
@@ -37,31 +32,8 @@ namespace WebAPIClient
                 return;
             }            
 
-            Console.WriteLine(GetPerson(email).Result.Identifier);
-        }
-
-        private static Dictionary<string,string> ParseArgs(string[] args)
-        {
-            char[] delimiterChars = { '=' };
-            Dictionary<string,string> settings = new Dictionary<string,string>();
-
-            foreach (var arg in args) {
-                string[] entry = arg.Split(delimiterChars);
-                settings[entry[0]] = entry[1];
-            }
-            return settings;
-        }
-
-        private static string GetSetting(string key, Dictionary<string, string> settings)
-        {
-            string value;
-            if(settings.TryGetValue(key, out value)) {
-                Console.WriteLine($"{key} is {value}.");
-                return value;
-            } else {
-                Console.WriteLine($"{key} is not specified.") ;
-                return null;
-            }
+            Person person = GetPerson(settings.email).Result;
+            Console.WriteLine($"person.Identifier == {person.Identifier}");
         }
 
         private static async Task<Boolean> IsCloudCardUp()
