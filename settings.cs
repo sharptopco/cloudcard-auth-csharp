@@ -15,12 +15,15 @@ namespace WebAPIClient
 
         public Boolean isValid { get; }
 
+        public string name {get; set; }
+
         public Settings (string[] args) {
             Dictionary<string,string> dictionary = ParseArgs(args);
             baseURL = GetSetting("baseURL", dictionary);
             authToken = GetSetting("authToken", dictionary);
             email = GetSetting("email", dictionary);
             idNumber = GetSetting("idNumber", dictionary);
+            name = GetSetting("name", dictionary);
             isValid = baseURL == null || authToken == null || email == null || idNumber == null;
         }
 
