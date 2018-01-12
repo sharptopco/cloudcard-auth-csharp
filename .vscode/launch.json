@@ -13,7 +13,7 @@
             "program": "${workspaceFolder}/bin/Debug/netcoreapp2.0/cloudcard-auth-csharp.dll",
             "args": [
                 "baseURL=test.cloudcardtools.com",
-                "authToken=8kldlr8hkoboeoh7j6cueqjh8h2cj2rb",
+                "authToken=add-a-valid-authenication-token-here",
                 "email=bacon@test.edu",
                 "idNumber=123321",
                 "name=Abe Lincoln"
