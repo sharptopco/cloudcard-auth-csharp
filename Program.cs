@@ -38,8 +38,10 @@ $@"{{
 
             //Find a person
             Person person = service.FindPerson(settings.email);
-            Console.WriteLine($"Found person '{person.Identifier}'");
-            
+            Console.WriteLine($"Found person '{person.Identifier}' with a photo status of '{person.Photo.Status}'");
+
+            string needs = person.NeedsToUploadPhoto() ? "needs" : "does not need";
+            Console.WriteLine($"Person '{person.Identifier}' {needs} to upload a photo.");
         }
 
     }
