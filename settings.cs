@@ -5,46 +5,46 @@ namespace WebAPIClient
 {
     public class Settings
     {
-        public string baseURL { get; set; }
+        public string BaseURL { get; set; }
 
-        public string authToken { get; set; }
+        public string AuthToken { get; set; }
 
-        public string email { get; set; }
+        public string Email { get; set; }
 
-        public string idNumber { get; set; }
+        public string IdNumber { get; set; }
 
-        public Boolean isValid { get; }
+        public Boolean IsValid { get; }
 
-        public string name {get; set; }
+        public string Name {get; set; }
 
         public Settings (string[] args) {
-            Dictionary<string,string> dictionary = ParseArgs(args);
-            baseURL = GetSetting("baseURL", dictionary);
-            authToken = GetSetting("authToken", dictionary);
-            email = GetSetting("email", dictionary);
-            idNumber = GetSetting("idNumber", dictionary);
-            name = GetSetting("name", dictionary);
-            isValid = baseURL == null || authToken == null || email == null || idNumber == null;
+            Dictionary<string,string> Dictionary = ParseArgs(args);
+            BaseURL = GetSetting("baseURL", Dictionary);
+            AuthToken = GetSetting("authToken", Dictionary);
+            Email = GetSetting("email", Dictionary);
+            IdNumber = GetSetting("idNumber", Dictionary);
+            Name = GetSetting("name", Dictionary);
+            IsValid = BaseURL == null || AuthToken == null || Email == null || IdNumber == null;
         }
 
         private static Dictionary<string,string> ParseArgs(string[] args)
         {
-            char[] delimiterChars = { '=' };
-            Dictionary<string,string> settings = new Dictionary<string,string>();
+            char[] DelimiterChars = { '=' };
+            Dictionary<string,string> Settings = new Dictionary<string,string>();
 
-            foreach (var arg in args) {
-                string[] entry = arg.Split(delimiterChars);
-                settings[entry[0]] = entry[1];
+            foreach (var Arg in args) {
+                string[] Entry = Arg.Split(DelimiterChars);
+                Settings[Entry[0]] = Entry[1];
             }
-            return settings;
+            return Settings;
         }
 
         private static string GetSetting(string key, Dictionary<string, string> settings)
         {
-            string value;
-            if(settings.TryGetValue(key, out value)) {
-                Console.WriteLine($"{key} is {value}.");
-                return value;
+            string Value;
+            if(settings.TryGetValue(key, out Value)) {
+                Console.WriteLine($"{key} is {Value}.");
+                return Value;
             } else {
                 Console.WriteLine($"{key} is not specified.") ;
                 return null;

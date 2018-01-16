@@ -13,23 +13,23 @@ namespace WebAPIClient
         private static HttpClient Client = new HttpClient();
         private const string Protocol = "https://";
 
-        public string baseURL { get; set; }
+        public string BaseURL { get; set; }
 
-        public string authToken { get; set; }
+        public string AuthToken { get; set; }
 
-        public Boolean isCloudCardUp { get; set; }
+        public Boolean IsCloudCardUp { get; set; }
 
         public CloudCardService
-        (string baseURL, string authToken) {
-            this.baseURL = baseURL;
-            this.authToken = authToken;
+        (string BaseURL, string AuthToken) {
+            this.BaseURL = BaseURL;
+            this.AuthToken = AuthToken;
 
-            Client.BaseAddress = new Uri($"{Protocol}{baseURL}/");
+            Client.BaseAddress = new Uri($"{Protocol}{BaseURL}/");
             Client.DefaultRequestHeaders.Accept.Clear();
             Client.DefaultRequestHeaders.Add("Accept", "application/json");
-            Client.DefaultRequestHeaders.Add("X-Auth-Token", authToken);
+            Client.DefaultRequestHeaders.Add("X-Auth-Token", AuthToken);
 
-            this.isCloudCardUp = CheckCloudCardStatus().Result;
+            this.IsCloudCardUp = CheckCloudCardStatus().Result;
         }
 
         private static async Task<Boolean> CheckCloudCardStatus()
@@ -58,7 +58,7 @@ namespace WebAPIClient
         }
 
         public string GetLink(string identifier) {
-            return PutPersonToCloudCard(identifier, "").Result.link;
+            return PutPersonToCloudCard(identifier, "").Result.Link;
         }
 
         public async Task<PersonResponse> PutPersonToCloudCard(string identifier, string json) {

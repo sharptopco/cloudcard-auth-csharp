@@ -8,9 +8,9 @@ namespace WebAPIClient
     public class PersonResponse
     {
         [DataMember(Name="access_link")]
-        public string link { get; set; }
+        public string Link { get; set; }
 
         [DataMember(Name="user")]
-        public Person person { get; set; }
+        public Person Person { get; set; }
     }
 }
