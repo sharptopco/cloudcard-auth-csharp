@@ -38,9 +38,10 @@ $@"{{
 
             //Find a person
             Person Person = Service.FindPerson(Settings.Email);
-            Console.WriteLine($"Found person '{Person.Identifier}' with a photo status of '{Person.Photo.Status}'");
+            string Status = (Person.Photo == null) ? "null" : Person.Photo.Status;
+            Console.WriteLine($"Found person '{Person.Identifier}' with a photo status of '{Status}'");
 
-            string Needs = Person.NeedsToUploadPhoto() ? "Needs" : "does not need";
+            string Needs = Person.NeedsToUploadPhoto() ? "needs" : "does not need";
             Console.WriteLine($"Person '{Person.Identifier}' {Needs} to upload a photo.");
         }
 
