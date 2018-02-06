@@ -57,8 +57,18 @@ namespace WebAPIClient
             return PutPersonToCloudCard(identifier, json).Result;
         }
 
-        public string GetLink(string identifier) {
+        /**
+         * This method removes all roles and returns a login link
+         */
+        public string GetLinkAsCardholder(string identifier) {
             return PutPersonToCloudCard(identifier, "").Result.Link;
+        }
+
+        /**
+         * This method grants the office user role and returns a login link
+         */
+        public string GetLinkAsOfficeUser(string identifier) {
+            return PutPersonToCloudCard(identifier, $@"{{ ""ROLE_OFFICE"": true }}").Result.Link;
         }
 
         public async Task<PersonResponse> PutPersonToCloudCard(string identifier, string json) {
