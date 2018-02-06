@@ -33,11 +33,11 @@ $@"{{
             Console.WriteLine($"Person '{Response.Person.Identifier}' created or updated.");
 
             //get login link without updating
-            string link = Service.GetLinkAsCardholder(Settings.IdNumber);
+            string link = Service.CreateLinkAsCardholder(Settings.IdNumber);
             Console.WriteLine($"The login link for '{Settings.IdNumber}' follows:\n{link}");
 
             // //assign office role and get login link
-            link = Service.GetLinkAsOfficeUser(Settings.IdNumber);
+            link = Service.CreateLinkAsOfficeUser(Settings.IdNumber);
             Console.WriteLine($"The login link for '{Settings.IdNumber}' follows:\n{link}");
 
             //Find a person

@@ -60,14 +60,14 @@ namespace WebAPIClient
         /**
          * This method removes all roles and returns a login link
          */
-        public string GetLinkAsCardholder(string identifier) {
+        public string CreateLinkAsCardholder(string identifier) {
             return PutPersonToCloudCard(identifier, "").Result.Link;
         }
 
         /**
          * This method grants the office user role and returns a login link
          */
-        public string GetLinkAsOfficeUser(string identifier) {
+        public string CreateLinkAsOfficeUser(string identifier) {
             return PutPersonToCloudCard(identifier, $@"{{ ""ROLE_OFFICE"": true }}").Result.Link;
         }
 
