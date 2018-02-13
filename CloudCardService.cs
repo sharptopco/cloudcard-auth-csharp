@@ -11,7 +11,7 @@ namespace WebAPIClient
     public class CloudCardService    
     {
         private static HttpClient Client = new HttpClient();
-        private const string Protocol = "https://";
+        private const string Protocol = "http://";
 
         public string BaseURL { get; set; }
 
@@ -53,26 +53,16 @@ namespace WebAPIClient
             return serializer.ReadObject(await streamTask) as Person;
         }
 
-        public PersonResponse CreateOrUpdatePerson(string identifier, string json) {
-            return PutPersonToCloudCard(identifier, json).Result;
+        public Person CreateOrUpdatePerson(string identifier, string json) {
+            return PostPersonToCloudCard(identifier, json, false).Result;
         }
 
-        /**
-         * This method removes all roles and returns a login link
-         */
-        public string CreateLinkAsCardholder(string identifier) {
-            return PutPersonToCloudCard(identifier, "").Result.Link;
+        public string CreateLoginLink(string identifier) {
+            return PostPersonToCloudCard(identifier, $@"{{ ""identifier"": ""{identifier}"" }}", false).Result.Links.Login;
         }
 
-        /**
-         * This method grants the office user role and returns a login link
-         */
-        public string CreateLinkAsOfficeUser(string identifier) {
-            return PutPersonToCloudCard(identifier, $@"{{ ""ROLE_OFFICE"": true }}").Result.Link;
-        }
-
-        public async Task<PersonResponse> PutPersonToCloudCard(string identifier, string json) {
-            var serializer = new DataContractJsonSerializer(typeof(PersonResponse));
+        public async Task<Person> PostPersonToCloudCard(string identifier, string json, Boolean isOfficeUser) {
+            var serializer = new DataContractJsonSerializer(typeof(Person));
             
             if(json != null && json != "") {
                 Console.WriteLine($"Updating user '{identifier}' with the following values: \n{json}\n");
@@ -81,15 +71,15 @@ namespace WebAPIClient
             }
 
             StringContent content = new System.Net.Http.StringContent(json.ToString(), Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await Client.PutAsync($"api/people/{identifier}?allowCreate=true&getLoginLink=true", content);
+            HttpResponseMessage response = await Client.PostAsync($"api/people?sendInvitation=false&allowUpdate=true&getLoginLink=true", content);
             response.EnsureSuccessStatusCode();
 
             string responseString = await response.Content.ReadAsStringAsync();
 
             Stream stream = GenerateStreamFromString(responseString);
-            PersonResponse personResponse =  serializer.ReadObject(stream) as PersonResponse;
+            Person person =  serializer.ReadObject(stream) as Person;
 
-            return personResponse;
+            return person;
         }
 
         public static Stream GenerateStreamFromString(string s)

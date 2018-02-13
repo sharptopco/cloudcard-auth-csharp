@@ -26,22 +26,17 @@ namespace WebAPIClient
             String json = 
 $@"{{
     ""email"":""{Settings.Email}"",
-    ""identifier"":""{Settings.IdNumber}"",
-    ""name"":""{Settings.Name}""
+    ""identifier"":""{Settings.IdNumber}""
 }}";
-            PersonResponse Response = Service.CreateOrUpdatePerson(Settings.IdNumber, json);
-            Console.WriteLine($"Person '{Response.Person.Identifier}' created or updated.");
+            Person Person = Service.CreateOrUpdatePerson(Settings.IdNumber, json);
+            Console.WriteLine($"Person '{Person.Identifier}' created or updated.");
 
             //get login link without updating
-            string link = Service.CreateLinkAsCardholder(Settings.IdNumber);
-            Console.WriteLine($"The login link for '{Settings.IdNumber}' follows:\n{link}");
-
-            // //assign office role and get login link
-            link = Service.CreateLinkAsOfficeUser(Settings.IdNumber);
+            string link = Service.CreateLoginLink(Settings.IdNumber);
             Console.WriteLine($"The login link for '{Settings.IdNumber}' follows:\n{link}");
 
             //Find a person
-            Person Person = Service.FindPerson(Settings.Email);
+            Person = Service.FindPerson(Settings.Email);
             string Status = (Person.Photo == null) ? "null" : Person.Photo.Status;
             Console.WriteLine($"Found person '{Person.Identifier}' with a photo status of '{Status}'");
 

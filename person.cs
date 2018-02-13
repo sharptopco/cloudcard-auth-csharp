@@ -13,6 +13,9 @@ namespace WebAPIClient
         [DataMember(Name="identifier")]
         public string Identifier { get; set; }
 
+        [DataMember(Name="links")]
+        public Links Links { get; set; }
+
         [DataMember(Name="currentPhoto")]
         public Photo Photo { get; set; }
 
