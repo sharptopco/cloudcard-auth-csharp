@@ -19,11 +19,15 @@ namespace WebAPIClient
         [DataMember(Name="currentPhoto")]
         public Photo Photo { get; set; }
 
-        public Boolean NeedsToUploadPhoto() {
-            if (Photo != null && (Photo.Status.Equals("PENDING") || Photo.Status.Equals("APPROVED") || Photo.Status.Equals("DOWNLOADED") || Photo.Status.Equals("DONE"))) {
+        public Boolean NeedsToSubmitPhoto() {
+            if (Photo != null && (Photo.Status.Equals("PENDING") || Photo.Status.Equals("APPROVED") || Photo.Status.Equals("READY_FOR_DOWNLOAD") || Photo.Status.Equals("DOWNLOADED") || Photo.Status.Equals("DONE"))) {
                 return false;
             }
             return true;
-        }        
+        }
+
+        public string getLoginLink() {
+            return Links.Login;
+        }
     }
 }

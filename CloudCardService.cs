@@ -11,7 +11,7 @@ namespace WebAPIClient
     public class CloudCardService    
     {
         private static HttpClient Client = new HttpClient();
-        private const string Protocol = "http://";
+        private const string Protocol = "https://";
 
         public string BaseURL { get; set; }
 
@@ -53,22 +53,18 @@ namespace WebAPIClient
             return serializer.ReadObject(await streamTask) as Person;
         }
 
-        public Person CreateOrUpdatePerson(string identifier, string json) {
-            return PostPersonToCloudCard(identifier, json, false).Result;
+        public Person CreateOrUpdatePerson(string json) {
+            return PostPersonToCloudCard(json).Result;
         }
 
         public string CreateLoginLink(string identifier) {
-            return PostPersonToCloudCard(identifier, $@"{{ ""identifier"": ""{identifier}"" }}", false).Result.Links.Login;
+            return PostPersonToCloudCard($@"{{ ""identifier"": ""{identifier}"" }}").Result.Links.Login;
         }
 
-        public async Task<Person> PostPersonToCloudCard(string identifier, string json, Boolean isOfficeUser) {
+        public async Task<Person> PostPersonToCloudCard(string json) {
             var serializer = new DataContractJsonSerializer(typeof(Person));
             
-            if(json != null && json != "") {
-                Console.WriteLine($"Updating user '{identifier}' with the following values: \n{json}\n");
-            } else {
-                Console.WriteLine($"Getting link for user '{identifier}'");
-            }
+            Console.WriteLine($"Posting the following JSON to /api/people: \n{json}\n");
 
             StringContent content = new System.Net.Http.StringContent(json.ToString(), Encoding.UTF8, "application/json");
             HttpResponseMessage response = await Client.PostAsync($"api/people?sendInvitation=false&allowUpdate=true&getLoginLink=true", content);
