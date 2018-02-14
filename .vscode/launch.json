@@ -12,11 +12,11 @@
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/bin/Debug/netcoreapp2.0/cloudcard-auth-csharp.dll",
             "args": [
-                "baseURL=test.cloudcardtools.com",
                 "authToken=add-a-valid-authenication-token-here",
-                "email=bacon@test.edu",
-                "idNumber=123321",
-                "name=Abe Lincoln"
+                "baseURL=test-api.onlinephotosubmission.com",
+                "email=jack.sparrow@test.edu",
+                "idNumber=123321123321",
+                "name=Jack Sparrow"
             ],
             "cwd": "${workspaceFolder}",
             // For more information about the 'console' field, see https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md#console-terminal-window

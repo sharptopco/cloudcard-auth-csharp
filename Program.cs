@@ -35,7 +35,7 @@ $@"{{
             Console.WriteLine($"Person '{Person.Identifier}' created or updated.");
             if (Person.NeedsToSubmitPhoto()){
                 Console.WriteLine($"Person '{Person.Identifier}' needs to upload a photo.");
-                Console.WriteLine($"Show the user this link: \n{Person.getLoginLink()}\ni.e. <a href='{Person.getLoginLink()}'>Upload Your Photo</a>");
+                Console.WriteLine($"Show the user this link: \n{Person.getLoginLink()}\n * Note: Use case 2 will deprovision this link.");
             } else {
                 Console.WriteLine($"Person '{Person.Identifier}' has already uploaded their photo.");
             }
